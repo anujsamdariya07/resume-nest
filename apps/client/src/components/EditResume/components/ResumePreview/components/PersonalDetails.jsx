@@ -2,7 +2,7 @@ import React from 'react'
 
 const PersonalDetails = ({resumeInfo}) => {
   return (
-    <div className='font-semibold'>
+    <div className='font-normal'>
       <h2 className='font-bold text-xl text-center' style={{color: resumeInfo?.themeColor}}>
         {resumeInfo?.firstName} {resumeInfo?.lastName}
       </h2>

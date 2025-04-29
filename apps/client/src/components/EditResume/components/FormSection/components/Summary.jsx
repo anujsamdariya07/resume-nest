@@ -9,7 +9,7 @@ import { toast } from 'sonner';
 import { GenerateSummary } from '../../../../../service/AIModel';
 
 const prompt =
-  'Write a professional and concise 4–5 line resume summary for a specific job title. The summary should highlight core responsibilities, key skills, and typical impact in the role, suitable for including at the top of a resume. Dont give any options, just return the summary no other word included.';
+  'Write a professional and concise 4–5 line resume summary for a specific job title. The summary should highlight core responsibilities, key skills, and typical impact in the role, suitable for including at the top of a resume. Dont give any options, just return the summary no other word included. The job title is';
 
 const Summary = ({ enabledNext }) => {
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);

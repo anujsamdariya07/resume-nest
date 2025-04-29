@@ -12,16 +12,14 @@ const ProfessionalExperience = ({resumeInfo}) => {
       {Array.isArray(resumeInfo?.experience) &&
         resumeInfo.experience.map((experience, index) => (
           <div key={index} className='my-5'>
-            <h2 className='text-sm font-bold'>{experience?.title}</h2>
+            <h2 className='text-sm font-bold' style={{color: resumeInfo?.themeColor}}>{experience?.title}</h2>
             <h2 className='text-xs flex justify-between'>
               {experience?.companyName}, {experience?.city}, {experience?.state}
               <span className='text-xs font-semibold'>
-                {experience?.startDate} - {experience?.currentlyWorking? 'Present': experience?.endDate}
+                {experience?.startDate} To {experience?.currentlyWorking? 'Present': experience?.endDate}
               </span>
             </h2>
-            <p className='text-xs my-2'>
-              {experience?.workSummary}
-            </p>
+            <div className='text-xs font-normal' dangerouslySetInnerHTML={{__html: experience?.workSummary}} />
           </div>
       ))}
 
