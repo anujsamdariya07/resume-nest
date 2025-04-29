@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { ResumeInfoContext } from '../../../context/ResumeInfoContext'
+import { ResumeInfoContext } from '../../../../context/ResumeInfoContext'
 import PersonalDetails from './components/PersonalDetails'
 import Summary from './components/Summary'
 import ProfessionalExperience from './components/ProfessionalExperience'

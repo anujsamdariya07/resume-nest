@@ -20,6 +20,27 @@ const resumeSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    firstName: {
+      type: String,
+    },
+    lastName: {
+      type: String,
+    },
+    address: {
+      type: String,
+    },
+    jobTitle: {
+      type: String,
+    },
+    email: {
+      type: String,
+    },
+    phone: {
+      type: String,
+    },
+    summary: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

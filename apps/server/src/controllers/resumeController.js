@@ -55,6 +55,37 @@ export const getResumesByUserEmail = async (req, res) => {
   }
 };
 
+export const updateResume = async (req, res) => {
+  const { resumeId } = req.params;
+  const { firstName, lastName, address, jobTitle, email, phone, summary } = req.body;
+
+  const updateData = {};
+  if (firstName !== undefined) updateData.firstName = firstName;
+  if (lastName !== undefined) updateData.lastName = lastName;
+  if (address !== undefined) updateData.address = address;
+  if (jobTitle !== undefined) updateData.jobTitle = jobTitle;
+  if (email !== undefined) updateData.email = email;
+  if (phone !== undefined) updateData.phone = phone;
+  if (summary !== undefined) updateData.summary = summary;
+
+  try {
+    const updatedResume = await Resume.findOneAndUpdate(
+      { resumeId },
+      updateData,
+      { new: true }
+    );
+
+    if (!updatedResume) {
+      return res.status(404).json({ message: 'Resume not found' });
+    }
+
+    return res.status(200).json(updatedResume);
+  } catch (error) {
+    return res.status(500).json({ message: 'Failed to update resume', error: error.message });
+  }
+};
+
+
 export const deleteResume = async (req, res) => {
   const { resumeId } = req.params;
 
