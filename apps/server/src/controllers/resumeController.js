@@ -25,13 +25,33 @@ export const createResume = async (req, res) => {
       userEmail,
       username,
     });
-    
+
     console.log('HERE');
     return res.status(201).json(newResume);
   } catch (error) {
     return res
       .status(500)
       .json({ message: 'Failed to create resume', error: error.message });
+  }
+};
+
+export const getResumesByUserEmail = async (req, res) => {
+  const { userEmail } = req.params;
+
+  if (!userEmail) {
+    return res.status(400).json({ message: 'User email is required' });
+  }
+
+  try {
+    const resumes = await Resume.find({ userEmail });
+    return res.status(200).json(resumes);
+  } catch (error) {
+    return res
+      .status(500)
+      .json({
+        message: 'Failed to fetch resumes by user email',
+        error: error.message,
+      });
   }
 };
 

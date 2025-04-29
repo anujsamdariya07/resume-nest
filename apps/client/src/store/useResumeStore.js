@@ -19,6 +19,22 @@ export const useResumeStore = create((set, get) => ({
     }
   },
 
+  getResumesByUserEmail: async (userEmail) => {
+    set({ isResumesLoading: true });
+    
+    try {
+      const res = await axiosInstance.get(`/resumes/${userEmail}`);
+      console.log(res.data)
+      set({ resumes: res.data });
+    } catch (error) {
+      console.log('Error in getResumesByUserEmail:', error.response?.data?.message || error.message);
+      toast.error(error.response?.data?.message || 'Failed to fetch resumes');
+    } finally {
+      set({ isResumesLoading: false });
+    }
+  },
+  
+
   createResume: async (resumeData) => {
     const { resumes } = get();
     try {
