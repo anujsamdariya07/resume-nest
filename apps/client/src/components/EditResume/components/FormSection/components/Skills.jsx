@@ -16,42 +16,38 @@ const Skills = ({ enabledNext }) => {
       rating: 0,
     },
   ]);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
-  const {resumeInfo, setResumeInfo} = useContext(ResumeInfoContext)
+  const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
 
-  const {resumeId} = useParams()
-  const {updateResume} = useResumeStore()
+  const { resumeId } = useParams();
+  const { updateResume } = useResumeStore();
 
   const AddNewSkill = () => {
-    setSkillsList([...skillsList, {
-      name: '', 
-      rating: 0,
-    }])
-  }
+    setSkillsList([...skillsList, { ...formField }]);
+  };
 
   const RemoveSkill = () => {
-    setSkillsList((skillsList) => skillsList.slice(0, -1))
-  }
+    setSkillsList((skillsList) => skillsList.slice(0, -1));
+  };
 
   const handleChange = (index, name, value) => {
-    const newEntries = skillsList.slice();
+    const newEntries = [...skillsList];
     newEntries[index][name] = value;
     setSkillsList(newEntries);
   };
 
-  const onSave = async (resumeId, skillsList, updateResume) => {
+  const onSave = async () => {
     setLoading(true);
     try {
       const updatedResume = await updateResume(resumeId, {
         skills: skillsList,
       });
-      console.log('Skills updated successfully:', updatedResume);
-      toast.success('Skills Updated!')
+      toast.success('Skills Updated!');
       return updatedResume;
     } catch (error) {
       console.error('Failed to update skills:', error);
-      toast.error('Error updating!')
+      toast.error('Error updating!');
       throw error;
     } finally {
       setLoading(false);
@@ -59,11 +55,17 @@ const Skills = ({ enabledNext }) => {
   };
 
   useEffect(() => {
+    if (Array.isArray(resumeInfo?.skills) && resumeInfo.skills.length > 0) {
+      setSkillsList(resumeInfo.skills);
+    }
+  }, []);
+
+  useEffect(() => {
     setResumeInfo({
       ...resumeInfo,
-      skills: skillsList
-    })
-  }, [skillsList])
+      skills: skillsList,
+    });
+  }, [skillsList]);
 
   return (
     <div className='p-5 shadow-lg rounded-lg border-t-primary border-t-4 mt-10'>
@@ -79,9 +81,11 @@ const Skills = ({ enabledNext }) => {
                   Name
                 </label>
                 <Input
-                className='w-full'
-                value={skill?.name}
-                  onChange={(event) => handleChange(index, 'name', event.target.value)}
+                  className='w-full'
+                  value={skill?.name}
+                  onChange={(event) =>
+                    handleChange(index, 'name', event.target.value)
+                  }
                 />
               </div>
               <div>
@@ -114,7 +118,11 @@ const Skills = ({ enabledNext }) => {
             </Button>
           </div>
         </div>
-        <Button disabled={loading} onClick={() => onSave(resumeId, skillsList, updateResume)} type='submit'>
+        <Button
+          disabled={loading}
+          onClick={() => onSave(resumeId, skillsList, updateResume)}
+          type='submit'
+        >
           {loading ? <LoaderCircle className='animate-spin' /> : 'Save'}
         </Button>
       </div>

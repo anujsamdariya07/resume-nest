@@ -35,6 +35,22 @@ export const createResume = async (req, res) => {
   }
 };
 
+export const getResumeById = async (req, res) => {
+  try {
+    const { resumeId } = req.params;
+    const resume = await Resume.findOne({ resumeId });
+
+    if (!resume) {
+      return res.status(404).json({ message: 'Resume not found' });
+    }
+
+    return res.status(200).json(resume);
+  } catch (error) {
+    console.error('Error fetching resume by ID:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
+
 export const getResumesByUserEmail = async (req, res) => {
   const { userEmail } = req.params;
 

@@ -64,6 +64,10 @@ const resumeSchema = new mongoose.Schema(
     experience: [experienceSchema],
     education: [educationSchema],
     skills: [skillSchema],
+    themeColor: {
+      type: String,
+      default: '#ff6666'
+    },
   },
   { timestamps: true }
 );

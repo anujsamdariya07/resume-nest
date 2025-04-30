@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import PersonalDetail from './components/PersonalDetail'
 import {Button} from '../../../ui/button'
-import {ArrowLeft, ArrowRight, LayoutGrid} from 'lucide-react'
+import {ArrowLeft, ArrowRight, Home, LayoutGrid} from 'lucide-react'
 import Summary from './components/Summary'
 import Experience from './components/Experience'
 import Education from './components/Education'
 import Skills from './components/Skills'
+import { Link } from 'react-router-dom'
 
 const FormSection = () => {
   const [activeFormIndex, setActiveFormIndex] = useState(1)
@@ -14,9 +15,16 @@ const FormSection = () => {
   return (
     <div>
       <div className='flex justify-between items-center'>
-        <Button className='flex gap-2' size='sm' variant={'outline'}>
-          <LayoutGrid /> Theme
-        </Button>
+        <div className='flex gap-5'>
+          <Link to='/dashboard'>
+          <Button className='flex gap-2' size='sm'>
+            <Home /> Home
+          </Button>
+          </Link>
+          <Button className='flex gap-2' size='sm' variant={'outline'}>
+            <LayoutGrid /> Theme
+          </Button>
+        </div>
         <div className='flex justify-center items-center gap-2'>
           {activeFormIndex > 1 && (
             <Button size='sm' variant='outline' onClick={() => setActiveFormIndex(activeFormIndex-1)}>

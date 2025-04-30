@@ -5,6 +5,7 @@ import { toast } from 'react-hot-toast';
 
 export const useResumeStore = create((set, get) => ({
   resumes: [],
+  resumeDetails: null,
   isResumesLoading: false,
 
   getResumes: async () => {
@@ -22,6 +23,35 @@ export const useResumeStore = create((set, get) => ({
       set({ isResumesLoading: false });
     }
   },
+
+  // getResumeById: async (resumeId) => {
+  //   set({ isResumeLoading: true });
+  //   try {
+  //     const res = await axiosInstance.get(`/resumes/${resumeId}`);
+  //     set({ resumeDetails: res.data });
+  //     return res.data;
+  //   } catch (error) {
+  //     console.error('Error fetching resume:', error);
+  //     toast.error('Failed to load resume.');
+  //     return null;
+  //   } finally {
+  //     set({ isResumeLoading: false });
+  //   }
+  // },
+
+  getResumeById: async (resumeId) => {
+    set({ isResumesLoading: true });
+    try {
+      const res = await axiosInstance.get(`/resumes/resume/${resumeId}`);
+      set({ resumeDetails: res.data });
+    } catch (error) {
+      console.error('Error fetching resume by ID:', error.message);
+      toast.error('Failed to fetch resume');
+    } finally {
+      set({ isResumesLoading: false });
+    }
+  },
+  
 
   getResumesByUserEmail: async (userEmail) => {
     set({ isResumesLoading: true });

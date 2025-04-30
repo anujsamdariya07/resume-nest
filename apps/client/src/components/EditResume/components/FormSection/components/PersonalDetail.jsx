@@ -10,7 +10,7 @@ import { toast } from 'sonner'
 const PersonalDetail = ({enabledNext}) => {
   const {updateResume} = useResumeStore()
   const {resumeId} = useParams()
-  console.log(resumeId)
+  // console.log(resumeId)
   
   const {resumeInfo, setResumeInfo} = useContext(ResumeInfoContext)
 

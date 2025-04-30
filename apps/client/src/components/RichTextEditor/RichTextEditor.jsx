@@ -16,11 +16,12 @@ import Editor, {
   Toolbar,
 } from 'react-simple-wysiwyg';
 
-const RichTextEditor = ({ value, onRichTextEditorChange }) => {
+const RichTextEditor = ({ value, defaultValue, onRichTextEditorChange }) => {
   return (
     <div>
       <Editor
         value={value}
+        defaultValue={defaultValue}
         onChange={onRichTextEditorChange}
       >
         <Toolbar>

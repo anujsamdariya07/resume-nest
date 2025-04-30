@@ -12,7 +12,7 @@ const EducationPreview = ({resumeInfo}) => {
       {Array.isArray(resumeInfo?.education) &&
         resumeInfo.education.map((education, index) => (
           <div key={index} className='my-5'>
-            <h2 className='text-sm font-semibold'>
+            <h2 className='text-sm font-bold' style={{color: resumeInfo?.themeColor}}>
               {education?.universityName}
             </h2>
             <h2 className='text-xs flex justify-between font-semibold'>

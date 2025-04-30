@@ -4,7 +4,8 @@ import {
   createResume,
   deleteResume,
   getResumesByUserEmail,
-  updateResume
+  updateResume,
+  getResumeById
 } from '../controllers/resumeController.js';
 
 const router = express.Router();
@@ -12,6 +13,8 @@ const router = express.Router();
 router.get('/', getResumes);
 
 router.get('/:userEmail', getResumesByUserEmail);
+
+router.get('/resume/:resumeId', getResumeById);
 
 router.post('/create', createResume);
 
