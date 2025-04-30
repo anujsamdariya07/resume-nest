@@ -26,6 +26,14 @@ const educationSchema = new mongoose.Schema(
   { _id: false }
 );
 
+const skillSchema = new mongoose.Schema(
+  {
+    name: String,
+    rating: Number,
+  },
+  { _id: false }
+);
+
 const resumeSchema = new mongoose.Schema(
   {
     title: {
@@ -55,6 +63,7 @@ const resumeSchema = new mongoose.Schema(
     summary: String,
     experience: [experienceSchema],
     education: [educationSchema],
+    skills: [skillSchema],
   },
   { timestamps: true }
 );
