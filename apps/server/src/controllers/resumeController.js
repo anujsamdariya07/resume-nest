@@ -46,32 +46,57 @@ export const getResumesByUserEmail = async (req, res) => {
     const resumes = await Resume.find({ userEmail });
     return res.status(200).json(resumes);
   } catch (error) {
-    return res
-      .status(500)
-      .json({
-        message: 'Failed to fetch resumes by user email',
-        error: error.message,
-      });
+    return res.status(500).json({
+      message: 'Failed to fetch resumes by user email',
+      error: error.message,
+    });
   }
 };
 
+// export const updateResume = async (req, res) => {
+//   const { resumeId } = req.params;
+//   const { firstName, lastName, address, jobTitle, email, phone, summary } = req.body;
+
+//   const updateData = {};
+//   if (firstName !== undefined) updateData.firstName = firstName;
+//   if (lastName !== undefined) updateData.lastName = lastName;
+//   if (address !== undefined) updateData.address = address;
+//   if (jobTitle !== undefined) updateData.jobTitle = jobTitle;
+//   if (email !== undefined) updateData.email = email;
+//   if (phone !== undefined) updateData.phone = phone;
+//   if (summary !== undefined) updateData.summary = summary;
+
+//   try {
+//     const updatedResume = await Resume.findOneAndUpdate(
+//       { resumeId },
+//       updateData,
+//       { new: true }
+//     );
+
+//     if (!updatedResume) {
+//       return res.status(404).json({ message: 'Resume not found' });
+//     }
+
+//     return res.status(200).json(updatedResume);
+//   } catch (error) {
+//     return res.status(500).json({ message: 'Failed to update resume', error: error.message });
+//   }
+// };
+
 export const updateResume = async (req, res) => {
   const { resumeId } = req.params;
-  const { firstName, lastName, address, jobTitle, email, phone, summary } = req.body;
-
   const updateData = {};
-  if (firstName !== undefined) updateData.firstName = firstName;
-  if (lastName !== undefined) updateData.lastName = lastName;
-  if (address !== undefined) updateData.address = address;
-  if (jobTitle !== undefined) updateData.jobTitle = jobTitle;
-  if (email !== undefined) updateData.email = email;
-  if (phone !== undefined) updateData.phone = phone;
-  if (summary !== undefined) updateData.summary = summary;
+
+  for (const key in req.body) {
+    if (req.body[key] !== undefined) {
+      updateData[key] = req.body[key];
+    }
+  }
 
   try {
     const updatedResume = await Resume.findOneAndUpdate(
       { resumeId },
-      updateData,
+      { $set: updateData },
       { new: true }
     );
 
@@ -81,10 +106,11 @@ export const updateResume = async (req, res) => {
 
     return res.status(200).json(updatedResume);
   } catch (error) {
-    return res.status(500).json({ message: 'Failed to update resume', error: error.message });
+    return res
+      .status(500)
+      .json({ message: 'Failed to update resume', error: error.message });
   }
 };
-
 
 export const deleteResume = async (req, res) => {
   const { resumeId } = req.params;

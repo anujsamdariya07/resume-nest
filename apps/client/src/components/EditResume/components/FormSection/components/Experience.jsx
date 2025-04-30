@@ -6,6 +6,8 @@ import { ResumeInfoContext } from '../../../../../context/ResumeInfoContext';
 import { Brain, LoaderCircle } from 'lucide-react';
 import { GenerateWorkSummary } from '../../../../../service/AIModel';
 import { toast } from 'sonner';
+import { useResumeStore } from '../../../../../store/useResumeStore';
+import { useParams } from 'react-router-dom';
 
 const formField = {
   title: '',
@@ -22,6 +24,12 @@ const prompt = `Give a work summary for the following information provided to yo
 const Experience = () => {
   const [experienceList, setExperienceList] = useState([{ ...formField }]);
   const [generating, setGenerating] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const {updateResume} = useResumeStore()
+
+  const {resumeId} = useParams()
+  console.log(resumeId)
 
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
 
@@ -44,6 +52,24 @@ const Experience = () => {
     const newEntries = experienceList.slice();
     newEntries[index][name] = event.target.value;
     setExperienceList(newEntries);
+  };
+
+  const onSave = async (resumeId, experienceList, updateResume) => {
+    setLoading(true);
+    try {
+      const updatedResume = await updateResume(resumeId, {
+        experience: experienceList,
+      });
+      console.log('Experience updated successfully:', updatedResume);
+      toast.success('Experience Updated!')
+      return updatedResume;
+    } catch (error) {
+      console.error('Failed to update experience:', error);
+      toast.error('Error updating!')
+      throw error;
+    } finally {
+      setLoading(false);
+    }
   };
 
   const generateWorkSummary = async (index) => {
@@ -100,6 +126,7 @@ const Experience = () => {
                     <Input
                       name='title'
                       onChange={(event) => handleChange(event, index)}
+                      defaultValue={resumeInfo?.experience[index]?.title}
                     />
                   </div>
                   <div>
@@ -182,11 +209,6 @@ const Experience = () => {
                       </Button>
                     </div>
                     <div>
-                      {/* <RichTextEditor value={item?.workSummary}
-                        onRichTextEditorChange={(event) =>
-                          handleRichTextEditor(event, 'workSummary', index)
-                        }
-                      /> */}
                       <RichTextEditor
                         value={item.workSummary}
                         onRichTextEditorChange={(event) =>
@@ -219,7 +241,9 @@ const Experience = () => {
               </Button>
             </div>
           </div>
-          <Button>Save</Button>
+          <Button disabled={loading} onClick={() => onSave(resumeId, experienceList, updateResume)} type='submit'>
+            {loading ? <LoaderCircle className='animate-spin' /> : 'Save'}
+          </Button>
         </div>
       </div>
     </div>

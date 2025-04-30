@@ -1,5 +1,31 @@
 import mongoose from 'mongoose';
 
+const experienceSchema = new mongoose.Schema(
+  {
+    title: String,
+    companyName: String,
+    city: String,
+    state: String,
+    startDate: String,
+    endDate: String,
+    currentlyWorking: String,
+    workSummary: String,
+  },
+  { _id: false }
+);
+
+const educationSchema = new mongoose.Schema(
+  {
+    universityName: String,
+    degree: String,
+    major: String,
+    startDate: String,
+    endDate: String,
+    description: String,
+  },
+  { _id: false }
+);
+
 const resumeSchema = new mongoose.Schema(
   {
     title: {
@@ -20,31 +46,18 @@ const resumeSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    firstName: {
-      type: String,
-    },
-    lastName: {
-      type: String,
-    },
-    address: {
-      type: String,
-    },
-    jobTitle: {
-      type: String,
-    },
-    email: {
-      type: String,
-    },
-    phone: {
-      type: String,
-    },
-    summary: {
-      type: String,
-    },
+    firstName: String,
+    lastName: String,
+    address: String,
+    jobTitle: String,
+    email: String,
+    phone: String,
+    summary: String,
+    experience: [experienceSchema],
+    education: [educationSchema],
   },
   { timestamps: true }
 );
 
 const Resume = mongoose.model('Resume', resumeSchema);
-
 export default Resume;
