@@ -38,7 +38,7 @@ const ResumeView = () => {
 
         <div className='my-10 mx-10 md:mx-20 lg:mx-36'>
           <h2 className='text-center text-2xl font-medium'>
-            Congratulations! You're ultime resume is ready!
+            Congratulations! You're ultimate resume is ready!
           </h2>
           <p className='text-center text-gray-400'>
             Now you are ready to download your resume and you can share unique

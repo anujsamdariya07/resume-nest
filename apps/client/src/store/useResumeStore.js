@@ -51,7 +51,6 @@ export const useResumeStore = create((set, get) => ({
       set({ isResumesLoading: false });
     }
   },
-  
 
   getResumesByUserEmail: async (userEmail) => {
     set({ isResumesLoading: true });
@@ -110,7 +109,9 @@ export const useResumeStore = create((set, get) => ({
     const { resumes } = get();
     try {
       await axiosInstance.delete(`/resumes/${resumeId}`);
-      set({ resumes: resumes.filter((resume) => resume.resumeId !== resumeId) });
+      set({
+        resumes: resumes.filter((resume) => resume.resumeId !== resumeId),
+      });
       toast.success('Resume deleted successfully!');
     } catch (error) {
       console.log(
