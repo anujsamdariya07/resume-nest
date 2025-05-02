@@ -24,7 +24,10 @@ const Skills = ({ enabledNext }) => {
   const { updateResume } = useResumeStore();
 
   const AddNewSkill = () => {
-    setSkillsList([...skillsList, { ...formField }]);
+    setSkillsList([...skillsList, {
+      name: '',
+      rating: 0,
+    }]);
   };
 
   const RemoveSkill = () => {
@@ -75,7 +78,7 @@ const Skills = ({ enabledNext }) => {
       <div>
         {Array.isArray(skillsList) &&
           skillsList.map((skill, index) => (
-            <div className='flex justify-between items-center border rounded-lg p-3 mb-2'>
+            <div className='flex justify-between items-center border rounded-lg p-3 mb-2' key={index}>
               <div>
                 <label htmlFor='' className='text-xs'>
                   Name
